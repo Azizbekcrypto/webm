@@ -224,6 +224,93 @@
 
   @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
+  /* ===== Shohruhxon — drop stage (givme.png) ===== */
+  .srk-stage{
+    position:relative;width:100%;max-width:360px;margin:0 auto 18px;
+    aspect-ratio:16/9;border-radius:16px;overflow:hidden;
+    border:1px solid var(--line);
+    box-shadow:0 18px 50px -22px rgba(124,108,255,.7), inset 0 0 0 1px rgba(255,255,255,.04);
+    animation:srkFloat 5s ease-in-out infinite;
+  }
+  .srk-stage img{
+    width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block;
+    transform-origin:center 70%;
+    transition:transform .55s cubic-bezier(.34,1.56,.64,1), filter .35s ease;
+    filter:saturate(1.05);
+  }
+  .srk-glow{
+    position:absolute;inset:0;pointer-events:none;
+    background:
+      radial-gradient(120% 80% at 50% 120%, rgba(124,108,255,.35), transparent 60%),
+      linear-gradient(180deg, transparent 55%, rgba(11,14,26,.85) 100%);
+    transition:opacity .35s ease;
+  }
+  .srk-hint{
+    position:absolute;left:0;right:0;bottom:9px;text-align:center;
+    font-family:var(--mono);font-size:12px;letter-spacing:.02em;color:#fff;
+    text-shadow:0 2px 10px rgba(0,0,0,.8);
+    opacity:.92;transform:translateY(0);transition:.35s ease;
+  }
+  .drop:hover .srk-stage img{transform:scale(1.06)}
+  .drop:hover .srk-stage{box-shadow:0 22px 60px -20px rgba(124,108,255,.95)}
+  .drop.drag .srk-stage{
+    animation:none;
+    border-color:var(--teal);
+    box-shadow:0 0 0 2px var(--teal), 0 26px 70px -18px rgba(52,224,200,.8);
+  }
+  .drop.drag .srk-stage img{transform:scale(1.12);filter:saturate(1.25) brightness(1.05)}
+  .drop.drag .srk-hint{color:var(--teal);transform:scale(1.06)}
+  .drop.drag .srk-glow{opacity:.6}
+  @keyframes srkFloat{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-6px)}
+  }
+
+  /* ===== Shohruhxon — good.png reveal ===== */
+  .srk-good{
+    position:relative;display:flex;align-items:center;gap:16px;
+    padding:14px 18px;margin:6px 0 18px;border-radius:16px;
+    border:1px solid rgba(52,224,200,.35);
+    background:linear-gradient(120deg, rgba(52,224,200,.10), rgba(124,108,255,.10));
+    box-shadow:0 18px 50px -26px rgba(52,224,200,.8);
+    overflow:hidden;
+    opacity:0;transform:scale(.85) translateY(10px);
+  }
+  .srk-good.show{animation:srkPop .7s cubic-bezier(.34,1.56,.64,1) forwards}
+  .srk-good-img{
+    flex:none;width:84px;height:84px;border-radius:50%;overflow:hidden;
+    border:2px solid var(--teal);box-shadow:0 0 0 4px rgba(52,224,200,.18);
+    animation:srkPulse 1.8s ease-in-out infinite;
+  }
+  .srk-good-img img{width:100%;height:100%;object-fit:cover;object-position:center 25%;display:block}
+  .srk-good-txt{min-width:0}
+  .srk-good-big{font-size:19px;font-weight:760;letter-spacing:-.01em}
+  .srk-good-sml{font-size:13px;color:var(--muted);margin-top:3px}
+  @keyframes srkPop{
+    0%{opacity:0;transform:scale(.5) translateY(20px) rotate(-6deg)}
+    55%{opacity:1;transform:scale(1.06) translateY(0) rotate(2deg)}
+    75%{transform:scale(.98) rotate(-1deg)}
+    100%{opacity:1;transform:scale(1) translateY(0) rotate(0)}
+  }
+  @keyframes srkPulse{
+    0%,100%{box-shadow:0 0 0 4px rgba(52,224,200,.18)}
+    50%{box-shadow:0 0 0 9px rgba(52,224,200,0)}
+  }
+  /* sparkles */
+  .srk-good .spark{position:absolute;width:8px;height:8px;border-radius:50%;opacity:0;pointer-events:none}
+  .srk-good.show .spark{animation:sparkle 1s ease-out forwards}
+  .srk-good .s1{left:14%;top:18%;background:var(--teal);animation-delay:.15s}
+  .srk-good .s2{left:30%;top:70%;background:var(--accent);animation-delay:.28s}
+  .srk-good .s3{left:55%;top:12%;background:#fff;animation-delay:.22s}
+  .srk-good .s4{left:72%;top:64%;background:var(--teal);animation-delay:.35s}
+  .srk-good .s5{left:88%;top:28%;background:var(--accent);animation-delay:.18s}
+  .srk-good .s6{left:46%;top:84%;background:#fff;animation-delay:.32s}
+  @keyframes sparkle{
+    0%{opacity:0;transform:scale(0) translateY(0)}
+    40%{opacity:1;transform:scale(1.4) translateY(-8px)}
+    100%{opacity:0;transform:scale(.4) translateY(-22px)}
+  }
+
   @media (max-width:560px){
     .controls{flex-direction:column;align-items:stretch}
     .ctl{min-width:0}
@@ -246,12 +333,12 @@
   <div class="card">
     <!-- DROP -->
     <div id="drop" class="drop" tabindex="0" role="button" aria-label="Audio faylni tanlang">
-      <div class="ico">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a99dff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 16V4M12 4l-4 4M12 4l4 4"/><path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/>
-        </svg>
+      <div class="srk-stage" id="srkStage" aria-hidden="true">
+        <img src="givme.png" alt="" draggable="false">
+        <div class="srk-glow"></div>
+        <div class="srk-hint">Faylingizni shu yerga bering 🎶</div>
       </div>
-      <div class="big">Audio faylni bu yerga tashlang</div>
+      <div class="big">Audio faylni Shohruhxonning qo'liga tashlang</div>
       <div class="small">yoki bosib kompyuterdan tanlang</div>
       <div class="formats">webm · mp3 · m4a · wav · ogg · opus</div>
       <input id="file" type="file" class="hidden" accept=".webm,.ogg,.opus,.oga,.mp3,.m4a,.aac,.wav,.flac,.weba,audio/*">
@@ -312,6 +399,18 @@
 
     <!-- RESULTS -->
     <div id="results" class="results hidden">
+      <div class="srk-good" id="srkGood" aria-hidden="true">
+        <div class="srk-good-img">
+          <img src="good.png" alt="" draggable="false">
+        </div>
+        <div class="srk-good-txt">
+          <div class="srk-good-big">Zo'r ish! 👍</div>
+          <div class="srk-good-sml">Audio muvaffaqiyatli bo'lindi</div>
+        </div>
+        <span class="spark s1"></span><span class="spark s2"></span>
+        <span class="spark s3"></span><span class="spark s4"></span>
+        <span class="spark s5"></span><span class="spark s6"></span>
+      </div>
       <div class="rhead">
         <h2 id="resTitle">Tayyor</h2>
         <button class="all" id="dlAll">Hammasini yuklab olish</button>
@@ -718,6 +817,18 @@
     lastResults = made; lastExt = ext;
     results.classList.remove('hidden');
     resTitle.textContent = parts + ' ta qism tayyor · '+ext.toUpperCase();
+
+    // Shohruhxon "good" tabrik animatsiyasi (good.png)
+    var good = $('srkGood');
+    if(good){
+      good.classList.remove('show');
+      if(reduceMotion){
+        good.style.opacity='1'; good.style.transform='none';
+      } else {
+        void good.offsetWidth; // reflow — animatsiyani qayta ishga tushirish
+        good.classList.add('show');
+      }
+    }
     partList.innerHTML='';
     made.forEach(function(part, idx){
       var name = baseName + '_qism' + part.index + '.' + ext;
