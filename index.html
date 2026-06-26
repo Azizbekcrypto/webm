@@ -326,8 +326,8 @@
 <div class="wrap">
   <header>
     <div class="eyebrow"><span class="dot"></span> Audio · lossless splitter</div>
-    <h1>Yozuvni <span class="em">teng qismlarga</span> bo'ling</h1>
-    <p class="sub">Faylni tashlang, nechta qismga bo'lishni tanlang — hammasi shu yerda, brauzeringizda bajariladi. Hech narsa internetga yuklanmaydi.</p>
+    <h1>Birga yozuvni <span class="em">teng qismlarga</span> bo'lamiz</h1>
+    <p class="sub">Faylni tashlang</p>
   </header>
 
   <div class="card">
@@ -828,6 +828,8 @@
         void good.offsetWidth; // reflow — animatsiyani qayta ishga tushirish
         good.classList.add('show');
       }
+      // "Zo'r ish, marhamat" chiqqanda natijaga avtoscroll
+      good.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
     }
     partList.innerHTML='';
     made.forEach(function(part, idx){
